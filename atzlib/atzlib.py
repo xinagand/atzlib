@@ -1,24 +1,10 @@
-'''
-import importlib
-import aidulib
-importlib.reload(aidulib)
-'''
-
-# AIDU Library Import
-from aicentro.session import Session
-from aicentro.framework.keras import Keras as AiduFrm
-aidu_session = Session(verify=False)
-aidu_framework = AiduFrm(session=aidu_session)
-
-
 # 'path'내 존재하는 파일 읽기.
 import os
-def get_flst(path='', option='t', show=False):
+def get_flst(path='./', option='t', show=False):
     # path: 타깃경로
     # option: t=해당폴더만, r=하위경로 포함
     # show: 읽어낸 경로 및 파일명 시각화
     flst = []
-    path = aidu_framework.config.data_dir+'/'+path
     
     if option == 't':  # 지정 폴더 탐색
         lst = os.listdir(path)
@@ -40,8 +26,6 @@ def get_flst(path='', option='t', show=False):
     return flst
 
 
-
-get_ipython().system('pip3 install openpyxl')
 import pandas as pd
 from openpyxl import load_workbook
 
@@ -76,7 +60,7 @@ from tqdm import tqdm
 # 주의) 실행시 저장할 경로(download)내 모든 파일을 지운다!
 def readyDL(path): 
     # path: 옮길 파일들이 있는 경로
-    save_path = aidu_framework.config.data_dir+'/download/' # 저장할 곳
+    save_path = './download/' # 저장할 곳
     from_path =  os.path.join(os.getcwd(), path)
     print(f'Start moving {path} to download.\nCleaning download folder...')
     
@@ -92,11 +76,6 @@ def readyDL(path):
         os.system(f'cp {indata} {outdata}')
     print(f'Done!')
     
-    
-import shutil
-# 지정 경로 이하의 모든 폴더 + 파일 싹지움
-def delall(path):  # yes/no 안물어보니 신중하게 사용!
-    shutil.rmtree(path)
 
 # 빈파일 만들기 1년치 데이터를 step 간격으로 뽑아낸다. 윤년계산은 없으니 주의
 def genEmpty(year, step):
@@ -140,7 +119,7 @@ def find_missing(df, col=None):
     missing = df.isnull().sum()
     print(missing)
     if col:
-        missing_df = merged_df[merged_df[col].isnull()]
+        missing_df = df[df[col].isnull()]
         missing_df.to_csv('missing.csv', index=False)
 
         
