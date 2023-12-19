@@ -1,3 +1,7 @@
+
+def sum_a_and_b(a: int, b: int) -> int:
+    return a + b
+
 # 'path'내 존재하는 파일 읽기.
 import os
 def get_flst(path='./', option='t', show=False):
