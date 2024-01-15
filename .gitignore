@@ -1,7 +1,4 @@
-atzlib.egg-info/
-build/
 dist/
 
 *.png
-
 *.yaml
